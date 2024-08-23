@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakalti PlayGame</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e1e1e1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .gadget-container {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 600px;
+        }
+        .game-screen {
+            margin-bottom: 20px;
+            border: 1px solid #666;
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background-color: #000;
+        }
+        .game-screen iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+        .game-screen iframe.active {
+            display: block;
+        }
+        .controls, .save-controls {
+            margin-bottom: 10px;
+        }
+        .control-btn, .switch-btn {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+            margin: 5px;
+        }
+        .control-btn:active, .switch-btn:active {
+            background-color: #777;
+        }
+        .save-textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #666;
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="gadget-container">
+        <div class="controls">
+            <button class="switch-btn" id="show-game1">Splatoon Sakalti Edition</button>
+            <button class="switch-btn" id="show-game2">スイカゲーム</button>
+        </div>
+        <div class="game-screen">
+            <iframe id="game1" src="https://scratch.mit.edu/projects/1056783281/embed" allowfullscreen></iframe>
+            <iframe id="game2" src="https://scratch.mit.edu/projects/1058612769/embed" allowfullscreen></iframe>
+        </div>
+        <div class="controls">
+            <button class="control-btn" id="left-btn">左</button>
+            <button class="control-btn" id="up-btn">上</button>
+            <button class="control-btn" id="right-btn">右</button>
+            <button class="control-btn" id="down-btn">下</button>
+            <button class="control-btn" id="action-btn">アクション</button>
+        </div>
+        <div class="save-controls">
+            <textarea id="save-data" class="save-textarea" placeholder="セーブデータがここに表示されます..."></textarea>
+            <button class="switch-btn" id="save-data-btn">セーブデータを保存</button>
+            <button class="switch-btn" id="load-data-btn">セーブデータを読み込み</button>
+        </div>
+    </div>
+    <script>
+        // ゲーム切り替え
+        document.getElementById('show-game1').addEventListener('click', function() {
+            document.getElementById('game1').classList.add('active');
+            document.getElementById('game2').classList.remove('active');
+        });
+
+        document.getElementById('show-game2').addEventListener('click', function() {
+            document.getElementById('game2').classList.add('active');
+            document.getElementById('game1').classList.remove('active');
+        });
+
+        // キーボード操作とボタンの連携
+        document.addEventListener('keydown', function(event) {
+            switch (event.key) {
+                case 'ArrowLeft':
+                    document.getElementById('left-btn').click();
+                    break;
+                case 'ArrowUp':
+                    document.getElementById('up-btn').click();
+                    break;
+                case 'ArrowRight':
+                    document.getElementById('right-btn').click();
+                    break;
+                case 'ArrowDown':
+                    document.getElementById('down-btn').click();
+                    break;
+                case ' ':
+                    document.getElementById('action-btn').click();
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // ボタンのクリックイベントをゲームに伝える
+        document.getElementById('left-btn').addEventListener('click', function() {
+            // ゲームに左移動を伝える
+        });
+        document.getElementById('up-btn').addEventListener('click', function() {
+            // ゲームに上移動を伝える
+        });
+        document.getElementById('right-btn').addEventListener('click', function() {
+            // ゲームに右移動を伝える
+        });
+        document.getElementById('down-btn').addEventListener('click', function() {
+            // ゲームに下移動を伝える
+        });
+        document.getElementById('action-btn').addEventListener('click', function() {
+            // ゲームにアクションを伝える
+        });
+
+        // セーブデータを保存
+        document.getElementById('save-data-btn').addEventListener('click', function() {
+            const saveData = document.getElementById('save-data').value;
+            saveGameData(saveData);
+        });
+
+        // セーブデータを読み込み
+        document.getElementById('load-data-btn').addEventListener('click', function() {
+            const loadedData = loadGameData();
+            document.getElementById('save-data').value = loadedData;
+        });
+
+        // ゲームのセーブデータをローカルストレージに保存
+        function saveGameData(gameData) {
+            localStorage.setItem('gameSaveData', gameData);
+        }
+
+        // ローカルストレージからゲームのセーブデータを取得
+        function loadGameData() {
+            const savedData = localStorage.getItem('gameSaveData');
+            return savedData ? savedData : '';  // 保存されたデータがなければ空文字を返す
+        }
+    </script>
+</body>
+</html>
